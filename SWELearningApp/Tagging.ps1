@@ -11,7 +11,7 @@
 
 $tenantId = '86b1dded-d548-4e1b-9584-900494145773' ### Paste your own tenant ID here
 $appId = '9d021cc0-9ba1-4ab8-8eb0-68c902b89faf' ### Paste your own app ID here
-$appSecret =  ### Paste your own app keys here
+$appSecret =  '19lxQk~rnjV~SPTzVb-E7w7Y0__DrpyMOl'
 $resourceAppIdUri = 'https://api-gov.securitycenter.microsoft.us'
 $oAuthUri = "https://login.microsoftonline.us/$TenantId/oauth2/token"
 $authBody = [Ordered] @{
@@ -34,6 +34,7 @@ $Data = @();
 $MachineName = $null;
 $MachineTag = $null;
 $MachineId = $null;
+
 ##### CSV input file serialization ####
 $Data = Import-Csv -Path 'C:\Users\MelissaHall_\Desktop\MachineList.csv'
 ##### Add Tag Block ####
