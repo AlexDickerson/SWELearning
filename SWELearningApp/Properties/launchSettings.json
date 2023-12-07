@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "SWELearningApp": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "AZURE_TENANT_ID": "86b1dded-d548-4e1b-9584-900494145773",
+        "AZURE_CLIENT_ID": "9d021cc0-9ba1-4ab8-8eb0-68c902b89faf",
+        "AZURE_SECRET_ID": "19lxQk~rnjV~SPTzVb-E7w7Y0__DrpyMOl"
+      }
+    }
+  }
+}

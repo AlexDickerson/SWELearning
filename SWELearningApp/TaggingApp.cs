@@ -3,6 +3,8 @@ using System.Text.Json.Serialization;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager;
 using Azure.Identity;
+using System.Formats.Tar;
+using Azure.ResourceManager.Resources;
 
 namespace SWELearningApp
 {
@@ -44,11 +46,35 @@ namespace SWELearningApp
 
             var authResponse = JsonSerializer.Deserialize<AuthResponse>(content);
 
-            var armClient = new ArmClient(new DefaultAzureCredential());
+            DefaultAzureCredentialOptions options = new();
+            options.AuthorityHost = AzureAuthorityHosts.AzureGovernment;
+            options.TenantId = tenantId;
+
+            var armOptions = new ArmClientOptions();
+            armOptions.Environment = ArmEnvironment.AzureGovernment;
+            var armClient = new ArmClient(new DefaultAzureCredential(options), default, armOptions);
 
             var defaultSub = armClient.GetDefaultSubscription();
 
             var vms = defaultSub.GetVirtualMachines().ToList();
+
+            foreach(var vm in vms)
+            {
+                Thread.Sleep(3000);
+                var vmName = vm.Data.Name;
+                var vmTag = "test";
+                var url = $"https://api-gov.securitycenter.microsoft.us/api/machines/{vmName}";
+
+                HttpRequestMessage tagRequest = new();
+                tagRequest.Method = HttpMethod.Get;
+                tagRequest.RequestUri = new Uri(url);
+                tagRequest.Headers.Add("Authorization", $"Bearer {authResponse.AccessToken}");
+                tagRequest.Headers.Add("Accept", "application/json");
+
+                var tagResponse = client.Send(tagRequest);
+                var tagContent = await tagResponse.Content.ReadAsStringAsync();
+
+            }
         }
     }
 
